@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const CloseButton = styled.button`
-  background: black;
-  color: white;
+  background: ${props => props.theme.black};
+  color: ${props => props.theme.white};
   font-size: 3rem;
   border: 0;
   position: absolute;

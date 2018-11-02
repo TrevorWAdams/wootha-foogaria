@@ -4,7 +4,7 @@ Mutation
 
 Query
 
-Scalar - this means that it's an acutal value and not a relationship. A scalar type of ID might be ABC123, a scalar type of String might be "Wes Bos". These are the default scalar types:
+Scalar - this means that it's an actual value and not a relationship. A scalar type of ID might be ABC123, a scalar type of String might be "Wes Bos". These are the default scalar types:
 
 Int: A signed 32‐bit integer.
 Float: A signed double-precision floating-point value.

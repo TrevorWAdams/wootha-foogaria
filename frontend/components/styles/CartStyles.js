@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const CartStyles = styled.div`
   padding: 20px;
   position: relative;
-  background: white;
+  background: ${props => props.theme.white};
   position: fixed;
   height: 100%;
   top: 0;
