@@ -8,7 +8,14 @@ import { DropDown, DropDownItem, SearchStyles } from './styles/DropDown';
 
 const SEARCH_ITEMS_QUERY = gql`
   query SEARCH_ITEMS_QUERY($searchTerm: String!) {
-    items(where: { OR: [{ title_contains: $searchTerm }, { description_contains: $searchTerm }] }) {
+    items(
+      where: {
+        OR: [
+          { title_contains: $searchTerm }
+          { description_contains: $searchTerm }
+        ]
+      }
+    ) {
       id
       image
       title
@@ -17,6 +24,10 @@ const SEARCH_ITEMS_QUERY = gql`
 `;
 
 function routeToItem(item) {
+  if (!item) {
+    return;
+  }
+
   Router.push({
     pathname: '/item',
     query: {
@@ -48,8 +59,18 @@ class AutoComplete extends React.Component {
     resetIdCounter();
     return (
       <SearchStyles>
-        <Downshift onChange={routeToItem} itemToString={item => (item === null ? '' : item.title)}>
-          {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => (
+        <Downshift
+          onChange={routeToItem}
+          itemToString={item => (item === null ? '' : item.title)}
+        >
+          {({
+            getInputProps,
+            getItemProps,
+            isOpen,
+            inputValue,
+            highlightedIndex,
+            clearSelection,
+          }) => (
             <div>
               <ApolloConsumer>
                 {client => (
@@ -60,6 +81,10 @@ class AutoComplete extends React.Component {
                       id: 'search',
                       className: this.state.loading ? 'loading' : '',
                       onChange: e => {
+                        if (e.target.value === '') {
+                          clearSelection();
+                        }
+
                         e.persist();
                         this.onChange(e, client);
                       },
@@ -80,7 +105,9 @@ class AutoComplete extends React.Component {
                     </DropDownItem>
                   ))}
                   {!this.state.items.length &&
-                    !this.state.loading && <DropDownItem> Nothing Found {inputValue}</DropDownItem>}
+                    !this.state.loading && (
+                      <DropDownItem> Nothing Found {inputValue}</DropDownItem>
+                    )}
                 </DropDown>
               )}
             </div>

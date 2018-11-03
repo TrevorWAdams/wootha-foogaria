@@ -20,7 +20,6 @@ const CartStyles = styled.div`
   ${props => props.open && `transform: translateX(0);`};
   header {
     border-bottom: 5px solid ${props => props.theme.brand0};
-
   }
   footer {
     border-top: 10px double ${props => props.theme.black};

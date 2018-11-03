@@ -47,7 +47,6 @@ const Mutations = {
     if (!ownsItem && !hasPermissions) {
       throw new Error("You don't have permission to do that!");
     }
-
     // remove the ID from the updates
     delete updates.id;
     // run the update method

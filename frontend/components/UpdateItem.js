@@ -17,8 +17,18 @@ const SINGLE_ITEM_QUERY = gql`
   }
 `;
 const UPDATE_ITEM_MUTATION = gql`
-  mutation UPDATE_ITEM_MUTATION($id: ID!, $title: String, $description: String, $price: Int) {
-    updateItem(id: $id, title: $title, description: $description, price: $price) {
+  mutation UPDATE_ITEM_MUTATION(
+    $id: ID!
+    $title: String
+    $description: String
+    $price: Int
+  ) {
+    updateItem(
+      id: $id
+      title: $title
+      description: $description
+      price: $price
+    ) {
       id
       title
       description
@@ -64,6 +74,9 @@ class UpdateItem extends Component {
                 <Form onSubmit={e => this.updateItem(e, updateItem)}>
                   <Error error={error} />
                   <fieldset disabled={loading} aria-busy={loading}>
+                    <div className="center">
+                      <h2>Item Detail</h2>
+                    </div>
                     <label htmlFor="title">
                       Title
                       <input
@@ -101,7 +114,12 @@ class UpdateItem extends Component {
                         onChange={this.handleChange}
                       />
                     </label>
-                    <button type="submit">Sav{loading ? 'ing' : 'e'} Changes</button>
+                    <div className="center">
+                      <button type="submit">
+                        Sav
+                        {loading ? 'ing' : 'e'} Changes
+                      </button>
+                    </div>
                   </fieldset>
                 </Form>
               )}

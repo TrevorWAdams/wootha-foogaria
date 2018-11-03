@@ -18,9 +18,10 @@ const makeANiceEmail = text => `
     font-size: 20px;
   ">
     <h2>Greetings,</h2>
+    
     <p>${text}</p>
     
-    <p>foogaria</p>
+    <p>gatekeeper@foogaria.com</p>
   </div>
 `;
 

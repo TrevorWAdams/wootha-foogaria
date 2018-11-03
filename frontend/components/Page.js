@@ -6,20 +6,16 @@ import Meta from './Meta';
 const theme = {
   white: '#f9f9fa',
   black: '#010101',
-
   lightGray: '#d7d0da',
   gray: '#baaec0',
   darkGray: '#94829d',
-
   brand1: '#ad00ff',
   brand0: '#0055ff',
   brand2: '#9634E8',
   brand3: '#3488E8',
-
   danger: '#ff2b00',
   warning: '#e0ff49',
   success: '#00ff2b',
-
   maxWidth: '1000px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
 };

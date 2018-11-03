@@ -47,11 +47,14 @@ class CreateItem extends Component {
     data.append('upload_preset', 'foogaria-store');
 
     //TODO: Move cloudinary variables to env or config
-    
-    const res = await fetch('https://api.cloudinary.com/v1_1/trevoradams-com/image/upload', {
-      method: 'POST',
-      body: data,
-    });
+
+    const res = await fetch(
+      'https://api.cloudinary.com/v1_1/trevoradams-com/image/upload',
+      {
+        method: 'POST',
+        body: data,
+      },
+    );
     const file = await res.json();
     this.setState({
       image: file.secure_url,
@@ -79,6 +82,9 @@ class CreateItem extends Component {
           >
             <Error error={error} />
             <fieldset disabled={loading} aria-busy={loading}>
+              <div className="center">
+                <h2>Item Detail</h2>
+              </div>
               <label htmlFor="file">
                 Image
                 <input
@@ -90,7 +96,11 @@ class CreateItem extends Component {
                   onChange={this.uploadFile}
                 />
                 {this.state.image && (
-                  <img width="200" src={this.state.image} alt="Upload Preview" />
+                  <img
+                    width="200"
+                    src={this.state.image}
+                    alt="Upload Preview"
+                  />
                 )}
               </label>
 
@@ -131,7 +141,9 @@ class CreateItem extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-              <button type="submit">Submit</button>
+              <div className="center">
+                <button type="submit">Submit</button>
+              </div>
             </fieldset>
           </Form>
         )}
