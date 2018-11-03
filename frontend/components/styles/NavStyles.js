@@ -37,7 +37,7 @@ const NavStyles = styled.ul`
     }
     &:after {
       height: 2px;
-      background: ${props => props.theme.secondary};
+      background: ${props => props.theme.brand0};
       content: '';
       width: 0;
       position: absolute;

@@ -11,10 +11,10 @@ const theme = {
   gray: '#baaec0',
   darkGray: '#94829d',
 
-  primary: '#ad00ff',
-  secondary: '#0055ff',
-  tertiary: '#9634E8', 
-  quaternary: '#3488E8', 
+  brand1: '#ad00ff',
+  brand0: '#0055ff',
+  brand2: '#9634E8',
+  brand3: '#3488E8',
 
   danger: '#ff2b00',
   warning: '#e0ff49',

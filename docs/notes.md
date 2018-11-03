@@ -1,4 +1,4 @@
-## Commonly Used Terms
+# Commonly Used Terms
 
 Mutation
 

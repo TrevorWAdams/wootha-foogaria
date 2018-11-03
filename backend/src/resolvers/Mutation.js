@@ -32,6 +32,9 @@ const Mutations = {
     return item;
   },
   updateItem(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!');
+    }
     // first take a copy of the updates
     const updates = { ...args };
     // remove the ID from the updates
@@ -48,6 +51,9 @@ const Mutations = {
     );
   },
   async deleteItem(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error('You must be logged in to do that!');
+    }
     const where = { id: args.id };
     // 1. find the item
     const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);

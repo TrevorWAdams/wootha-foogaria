@@ -7,8 +7,16 @@ import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
 
 const RESET_MUTATION = gql`
-  mutation RESET_MUTATION($resetToken: String!, $password: String!, $confirmPassword: String!) {
-    resetPassword(resetToken: $resetToken, password: $password, confirmPassword: $confirmPassword) {
+  mutation RESET_MUTATION(
+    $resetToken: String!
+    $password: String!
+    $confirmPassword: String!
+  ) {
+    resetPassword(
+      resetToken: $resetToken
+      password: $password
+      confirmPassword: $confirmPassword
+    ) {
       id
       email
       name
@@ -48,7 +56,9 @@ class Reset extends Component {
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2>Reset Your Password</h2>
+              <div className="center">
+                <h2>Reset Your Password</h2>
+              </div>
               <Error error={error} />
               <label htmlFor="password">
                 Password
@@ -71,8 +81,9 @@ class Reset extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-
-              <button type="submit">Reset Your Password!</button>
+              <div className="center">
+                <button type="submit">Reset Your Password!</button>
+              </div>
             </fieldset>
           </Form>
         )}
