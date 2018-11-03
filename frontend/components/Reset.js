@@ -82,7 +82,7 @@ class Reset extends Component {
                 />
               </label>
               <div className="center">
-                <button type="submit">Reset Your Password!</button>
+                <button type="submit">Reset Your Password</button>
               </div>
             </fieldset>
           </Form>

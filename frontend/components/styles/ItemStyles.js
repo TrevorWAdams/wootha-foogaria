@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Item = styled.div`
   background: ${props => props.theme.white};
-  border: 1px solid ${props => props.theme.lightGray};
+  border: 1px solid ${props => props.theme.darkGray};
   position: relative;
   display: flex;
   flex-direction: column;
@@ -18,6 +18,9 @@ const Item = styled.div`
     flex-grow: 1;
     padding: 0 3rem;
     font-size: 1.5rem;
+  }
+  h2 {
+    color: ${props => props.theme.black};
   }
   .buttonList {
     display: grid;

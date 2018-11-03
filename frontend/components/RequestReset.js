@@ -51,7 +51,7 @@ class RequestReset extends Component {
                 />
               </label>
               <div className="center">
-                <button type="submit">Request Reset</button>
+                <button type="submit">Reset Password</button>
               </div>
             </fieldset>
           </Form>

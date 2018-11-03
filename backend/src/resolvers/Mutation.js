@@ -11,7 +11,6 @@ const Mutations = {
     if (!ctx.request.userId) {
       throw new Error('You must be logged in to do that!');
     }
-
     const item = await ctx.db.mutation.createItem(
       {
         data: {
@@ -24,19 +23,31 @@ const Mutations = {
           ...args,
         },
       },
-      info
+      info,
     );
-
-    console.log(item);
-
     return item;
   },
-  updateItem(parent, args, ctx, info) {
+  async updateItem(parent, args, ctx, info) {
     if (!ctx.request.userId) {
       throw new Error('You must be logged in to do that!');
     }
     // first take a copy of the updates
     const updates = { ...args };
+    const id = updates.id;
+
+    const where = { id: id };
+    // 1. find the item
+    const item = await ctx.db.query.item({ where }, `{ id title user { id }}`);
+    // 2. Check if they own that item, or have the permissions
+    const ownsItem = item.user.id === ctx.request.userId;
+    const hasPermissions = ctx.request.user.permissions.some(permission =>
+      ['ADMIN', 'ITEMDELETE'].includes(permission),
+    );
+
+    if (!ownsItem && !hasPermissions) {
+      throw new Error("You don't have permission to do that!");
+    }
+
     // remove the ID from the updates
     delete updates.id;
     // run the update method
@@ -47,7 +58,7 @@ const Mutations = {
           id: args.id,
         },
       },
-      info
+      info,
     );
   },
   async deleteItem(parent, args, ctx, info) {
@@ -60,7 +71,7 @@ const Mutations = {
     // 2. Check if they own that item, or have the permissions
     const ownsItem = item.user.id === ctx.request.userId;
     const hasPermissions = ctx.request.user.permissions.some(permission =>
-      ['ADMIN', 'ITEMDELETE'].includes(permission)
+      ['ADMIN', 'ITEMDELETE'].includes(permission),
     );
 
     if (!ownsItem && !hasPermissions) {
@@ -84,7 +95,7 @@ const Mutations = {
           permissions: { set: ['USER'] },
         },
       },
-      info
+      info,
     );
     // create the JWT token for them
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
@@ -142,8 +153,9 @@ const Mutations = {
       subject: 'Your Password Reset Token',
       html: makeANiceEmail(`Your Password Reset Token is here!
       \n\n
-      <a href="${process.env
-        .FRONTEND_URL}/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
+      <a href="${
+        process.env.FRONTEND_URL
+      }/reset?resetToken=${resetToken}">Click Here to Reset</a>`),
     });
 
     // 4. Return the message
@@ -198,7 +210,7 @@ const Mutations = {
           id: ctx.request.userId,
         },
       },
-      info
+      info,
     );
     // 3. Check if they have permissions to do this
     hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE']);
@@ -214,7 +226,7 @@ const Mutations = {
           id: args.userId,
         },
       },
-      info
+      info,
     );
   },
   async addToCart(parent, args, ctx, info) {
@@ -238,7 +250,7 @@ const Mutations = {
           where: { id: existingCartItem.id },
           data: { quantity: existingCartItem.quantity + 1 },
         },
-        info
+        info,
       );
     }
     // 4. If its not, create a fresh CartItem for that user!
@@ -253,7 +265,7 @@ const Mutations = {
           },
         },
       },
-      info
+      info,
     );
   },
   async removeFromCart(parent, args, ctx, info) {
@@ -264,7 +276,7 @@ const Mutations = {
           id: args.id,
         },
       },
-      `{ id, user { id }}`
+      `{ id, user { id }}`,
     );
     // 1.5 Make sure we found an item
     if (!cartItem) throw new Error('No CartItem Found!');
@@ -277,13 +289,14 @@ const Mutations = {
       {
         where: { id: args.id },
       },
-      info
+      info,
     );
   },
   async createOrder(parent, args, ctx, info) {
     // 1. Query the current user and make sure they are signed in
     const { userId } = ctx.request;
-    if (!userId) throw new Error('You must be signed in to complete this order.');
+    if (!userId)
+      throw new Error('You must be signed in to complete this order.');
     const user = await ctx.db.query.user(
       { where: { id: userId } },
       `{
@@ -294,12 +307,12 @@ const Mutations = {
         id
         quantity
         item { title price id description image largeImage }
-      }}`
+      }}`,
     );
     // 2. recalculate the total for the price
     const amount = user.cart.reduce(
       (tally, cartItem) => tally + cartItem.item.price * cartItem.quantity,
-      0
+      0,
     );
     console.log(`Going to charge for a total of ${amount}`);
     // 3. Create the stripe charge (turn token into $$$)
