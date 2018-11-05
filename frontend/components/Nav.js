@@ -21,25 +21,32 @@ const Nav = () => (
             <Link href="/orders">
               <a>Orders</a>
             </Link>
-            <Link href="/me">
-              <a>Account</a>
-            </Link>
             <Signout />
             <Mutation mutation={TOGGLE_CART_MUTATION}>
-              {(toggleCart) => (
+              {toggleCart => (
                 <button onClick={toggleCart}>
                   My Cart
-                  <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}></CartCount>
+                  <CartCount
+                    count={me.cart.reduce(
+                      (tally, cartItem) => tally + cartItem.quantity,
+                      0,
+                    )}
+                  />
                 </button>
               )}
             </Mutation>
           </>
         )}
         {!me && (
-          <Link href="/signup">
-            <a>Sign In</a>
-          </Link>
+          <>
+            <Link href="/signin">
+              <a>Log in</a>
+            </Link>
 
+            <Link href="/signup">
+              <a>Sign Up</a>
+            </Link>
+          </>
         )}
       </NavStyles>
     )}

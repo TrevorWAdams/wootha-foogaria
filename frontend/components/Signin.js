@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import Link from 'next/link';
 import Form from './styles/Form';
 import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
@@ -41,7 +42,9 @@ class Signin extends Component {
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2>Sign into your account</h2>
+              <div className="center">
+                <h2>Sign into your account</h2>
+              </div>
               <Error error={error} />
               <label htmlFor="email">
                 Email
@@ -63,8 +66,18 @@ class Signin extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-
-              <button type="submit">Sign In!</button>
+              <div className="center">
+                <Link
+                  href={{
+                    pathname: '/request-reset',
+                  }}
+                >
+                  <a>Forgot Password</a>
+                </Link>
+              </div>
+              <div className="center">
+                <button type="submit">Sign In</button>
+              </div>
             </fieldset>
           </Form>
         )}

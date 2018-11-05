@@ -6,7 +6,11 @@ import Error from './ErrorMessage';
 import { CURRENT_USER_QUERY } from './User';
 
 const SIGNUP_MUTATION = gql`
-  mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!) {
+  mutation SIGNUP_MUTATION(
+    $email: String!
+    $name: String!
+    $password: String!
+  ) {
     signup(email: $email, name: $name, password: $password) {
       id
       email
@@ -41,7 +45,9 @@ class Signup extends Component {
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>
-              <h2>Sign Up for An Account</h2>
+              <div className="center">
+                <h2>Sign Up for An Account</h2>
+              </div>
               <Error error={error} />
               <label htmlFor="email">
                 Email
@@ -73,8 +79,9 @@ class Signup extends Component {
                   onChange={this.saveToState}
                 />
               </label>
-
-              <button type="submit">Sign Up!</button>
+              <div className="center">
+                <button type="submit">Sign Up</button>
+              </div>
             </fieldset>
           </Form>
         )}

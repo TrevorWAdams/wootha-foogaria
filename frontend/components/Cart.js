@@ -26,7 +26,9 @@ const TOGGLE_CART_MUTATION = gql`
 /* eslint-disable */
 const Composed = adopt({
   user: ({ render }) => <User>{render}</User>,
-  toggleCart: ({ render }) => <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>,
+  toggleCart: ({ render }) => (
+    <Mutation mutation={TOGGLE_CART_MUTATION}>{render}</Mutation>
+  ),
   localState: ({ render }) => <Query query={LOCAL_STATE_QUERY}>{render}</Query>,
 });
 /* eslint-enable */
@@ -42,12 +44,20 @@ const Cart = () => (
             <CloseButton onClick={toggleCart} title="close">
               &times;
             </CloseButton>
-            <Supreme>{me.name}'s Cart</Supreme>
+            <Supreme>
+              {me.name}
+              's Cart
+            </Supreme>
             <p>
-              You Have {me.cart.length} Item{me.cart.length === 1 ? '' : 's'} in your cart.
+              You Have {me.cart.length} Item
+              {me.cart.length === 1 ? '' : 's'} in your cart.
             </p>
           </header>
-          <ul>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</ul>
+          <ul>
+            {me.cart.map(cartItem => (
+              <CartItem key={cartItem.id} cartItem={cartItem} />
+            ))}
+          </ul>
           <footer>
             <p>{formatMoney(calcTotalPrice(me.cart))}</p>
             {me.cart.length && (
