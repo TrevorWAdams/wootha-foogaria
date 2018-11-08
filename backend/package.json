@@ -1,6 +1,7 @@
 {
-  "name": "foogaria-backend",
-  "description": "Foogaria - An example React, GraphQL, Next and Apollo",
+  "name": "whotha-foogaria-backend",
+  "description": "the backend of whotha-foogaria",
+
   "scripts": {
     "start": "nodemon -e js,graphql -x node src/index.js",
     "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
@@ -25,7 +26,7 @@
   },
   "license": "MIT",
   "repository": {
-    "url": "wesbos.com"
+    "url": "https://github.com/foogaria/wootha-foogaria"
   },
   "babel": {
     "presets": [
